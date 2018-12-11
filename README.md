@@ -1,6 +1,4 @@
-# Apollo Client Enhancers with React Starter Project
-
-This project is for used with the Mastering Apollo Series on WintellectNOW [http://www.wintellectnow.com](http://www.wintelltectnow.com)
+# Apollo Client with React Starter Project
 
 ## Project Setup
 
