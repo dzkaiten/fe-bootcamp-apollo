@@ -36,5 +36,31 @@
       "price": 20,
       "quantity": 21
     }
+  ],
+  "cars": [
+    {
+      "id": 1,
+      "make": "Audi",
+      "model": "A4",
+      "year": 2002,
+      "color": "Black",
+      "price": 7000
+    },
+    {
+      "id": 2,
+      "make": "BMW",
+      "model": "335i",
+      "year": 2015,
+      "color": "White",
+      "price": 30000
+    },
+    {
+      "id": 4,
+      "make": "Toyota",
+      "model": "Camry",
+      "year": 1999,
+      "color": "Green",
+      "price": 1000
+    }
   ]
 }
