@@ -37,97 +37,31 @@
       "quantity": 21
     },
     {
+      "name": "New Widget",
+      "description": "desc",
+      "color": "blue",
+      "size": "big",
+      "price": 123,
+      "quantity": 1,
       "id": 5
     },
     {
+      "name": "test",
+      "description": "a",
+      "color": "b",
+      "size": "c",
+      "price": 1,
+      "quantity": 1,
       "id": 6
     },
     {
+      "name": "a",
+      "description": "a",
+      "color": "a",
+      "size": "a",
+      "price": 0,
+      "quantity": 0,
       "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 9
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 10
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 11
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 12
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 13
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 14
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 15
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 16
-    },
-    {
-      "name": "cool",
-      "description": "cool desc",
-      "color": "red",
-      "size": "small",
-      "price": 12.34,
-      "quantity": 345,
-      "id": 17
     }
   ],
   "cars": [
@@ -156,76 +90,20 @@
       "price": 1000
     },
     {
-      "id": 10,
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000
+      "make": "Tesla",
+      "model": "S",
+      "year": 2018,
+      "color": "Silver",
+      "price": 30000,
+      "id": 5
     },
     {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 11
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 12
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 13
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 14
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 15
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2002,
-      "color": "Black",
-      "price": 7000,
-      "id": 16
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2023402,
-      "color": "Black",
-      "price": 7000,
-      "id": 17
-    },
-    {
-      "make": "Audi",
-      "model": "A4",
-      "year": 2023402,
-      "color": "Black",
-      "price": 7000,
-      "id": 18
+      "make": "test",
+      "model": "123",
+      "year": 1950,
+      "color": "asdf",
+      "price": 1,
+      "id": 6
     }
   ]
 }
