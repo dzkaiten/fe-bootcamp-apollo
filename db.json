@@ -62,6 +62,42 @@
       "price": 0,
       "quantity": 0,
       "id": 7
+    },
+    {
+      "name": "HI",
+      "description": "1",
+      "color": "ASDF",
+      "size": "1",
+      "price": 1,
+      "quantity": 1,
+      "id": 8
+    },
+    {
+      "name": "asdf",
+      "description": "asdf",
+      "color": "asdf",
+      "size": "1234",
+      "price": 1324,
+      "quantity": 1234,
+      "id": 9
+    },
+    {
+      "name": "",
+      "description": "",
+      "color": "",
+      "size": "",
+      "price": 0,
+      "quantity": 0,
+      "id": 10
+    },
+    {
+      "name": "widget",
+      "description": "widget",
+      "color": "asdf",
+      "size": "awfaefawef",
+      "price": 1,
+      "quantity": 1,
+      "id": 11
     }
   ],
   "cars": [
@@ -104,6 +140,22 @@
       "color": "asdf",
       "price": 1,
       "id": 6
+    },
+    {
+      "make": "Car",
+      "model": "car",
+      "year": 1950,
+      "color": "123",
+      "price": 123,
+      "id": 7
+    },
+    {
+      "make": "asdf",
+      "model": "asdf",
+      "year": 1950,
+      "color": "123",
+      "price": 123,
+      "id": 8
     }
   ]
 }

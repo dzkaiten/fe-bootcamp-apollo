@@ -23,6 +23,12 @@ export const resolvers = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(car)
       }).then(res => res.json()),
+
+    deleteCar: (_, { carId }, { restURL }) =>
+      fetch(`${restURL}/cars/${carId}`, {
+        method: 'DELETE',    
+      }).then(res => res.json())
+        .then(() => carId),
   },
   
 };

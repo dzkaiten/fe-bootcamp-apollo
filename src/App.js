@@ -3,7 +3,8 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { WidgetForm } from './components/WidgetForm';
-import { CarForm } from './components/CarForm'
+import { CarForm } from './components/CarForm';
+import { CarTable } from './components/CarTable';
 
 const APP_QUERY = gql`
   query AppQuery {
@@ -45,6 +46,12 @@ const APPEND_CAR_MUTATION = gql`
   }
 `;
 
+const DELETE_CAR_MUTATION = gql`
+  mutation DeleteCar($varCarId: Int) {
+    deleteCar(carId: $varCarId) 
+  }
+`
+
 export const App = () => {
   return <>
   <Query query={APP_QUERY}>
@@ -60,61 +67,56 @@ export const App = () => {
         </ul>
 
         <h1>Car List</h1>
-        <table>
-          <thead>
-            <tr>
-                <th>Id</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Color</th>
-                <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.cars.map(car => 
-              <tr key={car.id}>
-                <td>{car.id}</td>
-                <td>{car.make}</td>
-                <td>{car.model}</td>
-                <td>{car.year}</td>
-                <td>{car.color}</td>
-                <td>{car.price}</td>
-              </tr>)}
-          </tbody>
-      </table>        
+        <Mutation mutation={DELETE_CAR_MUTATION}>
+          {(mutate) => {
+            const deleteCar = (carId) => {
+              return mutate( {
+                variables: { varCarId: carId }, // populates $varCarId in mutation
+                update(store, { data: { deleteCar: carId } }) {
+                  let data = store.readQuery({ query: APP_QUERY });
+                  data = { ...data, cars: data.cars.filter(c => c.id !== carId) };
+                  store.writeQuery({ query: APP_QUERY, data });
+                }
+              })
+            }
+            return <CarTable cars={data.cars} onDeleteCar={deleteCar}/>
+          }}
+        </Mutation>    
     </>;
     }}
   </Query>
 
   <Mutation mutation={APPEND_WIDGET_MUTATION}>
-  {(mutate) => {
+    {(mutate) => {
+      const appendWidget = widget => {
+        return mutate({
+          mutation: APPEND_WIDGET_MUTATION,
+          variables: { widget },
+          
+          /* This refreshes the entire widgets list like we did before */
+          // refetchQueries: [
+          //   { query: APP_QUERY,}
+          // ],
+          
+          /* This shows in the client but does not reflect in the server instantly */
+          // optimisticResponse: {
+          //   appendWidget: {
+          //     ...widget,
+          //     id: -1,
+          //     __typename: 'Widget',
+          //   }
+          // },
 
-    const appendWidget = widget => {
-      return mutate({
-        mutation: APPEND_WIDGET_MUTATION,
-        variables: { widget },
-        refetchQueries: [
-          { query: APP_QUERY,}
-        ],
-        // optimisticResponse: {
-        //   appendWidget: {
-        //     ...widget,
-        //     id: -1,
-        //     __typename: 'Widget',
-        //   }
-        // },
-        // update(store, { data: { appendWidget: widget }}) {
-        //   let data = store.readQuery({ query: APP_QUERY });
-        //   data = data.widgets.concat(widget);
-        //   store.writeQuery({ query: APP_QUERY, data });
-        // }
-      });
-    };
-
-    return <WidgetForm onSubmitWidget={appendWidget} />;
-    
-  }}
+          update(store, { data: { appendWidget: widget } }) {
+            let data = store.readQuery({ query: APP_QUERY });
+            data = { ...data, widgets: data.widgets.concat(widget) };
+            store.writeQuery({ query: APP_QUERY, data });
+          }
+        });
+      };
+      return <WidgetForm onSubmitWidget={appendWidget} />;
+      
+    }}
 
   </Mutation>
 
@@ -125,30 +127,74 @@ export const App = () => {
       return mutate({
         mutation: APPEND_CAR_MUTATION,
         variables: { car },
-        refetchQueries: [
-          { query: APP_QUERY,}
-        ],
-        // optimisticResponse: {
-        //   appendCar: {
-        //     ...car,
-        //     id: -1,
-        //     __typename: 'Car',
-        //   }
-        // },
-        // update(store, { data: { appendCar: car }}) {
-        //   let data = store.readQuery({ query: APP_QUERY });
-        //   data = data.cars.concat(car);
-        //   store.writeQuery({ query: APP_QUERY, data });
-        // }
+        
+        // refetchQueries: [
+        //   { query: APP_QUERY,}
+        // ],
+        
+        optimisticResponse: {
+          appendCar: {
+            ...car,
+            id: -1,
+            __typename: 'Car',
+          }
+        },
+        
+        update(store, { data: { appendCar: car }}) {
+          let data = store.readQuery({ query: APP_QUERY });
+          data = {...data, cars: data.cars.concat(car) };
+          store.writeQuery({ query: APP_QUERY, data });
+        }
       });
     };
-
-    return <CarForm onSubmitCar={appendCar} />;
-    
+    return <CarForm onSubmitCar={appendCar}/>;
   }}
 
   </Mutation>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {/* <Mutation mutation={DELETE_CAR_MUTATION}>
+    {(mutate) => {
+
+      const deleteCar = id => {
+        return mutate({
+          mutation: DELETE_CAR_MUTATION,
+          variables: { id },
+          
+          refetchQueries: [
+            { query: APP_QUERY,}
+          ],
+          
+          // optimisticResponse: {
+          //   appendCar: {
+          //     ...car,
+          //     id: -1,
+          //     __typename: 'Car',
+          //   }
+          // },
+          
+          // update(store, { data: { appendCar: car }}) {
+          //   let data = store.readQuery({ query: APP_QUERY });
+          //   data = {...data, cars: data.cars.concat(car) };
+          //   store.writeQuery({ query: APP_QUERY, data });
+          // }
+        });
+      };
+    }}
+
+  </Mutation> */}
 
   </>;
 }
