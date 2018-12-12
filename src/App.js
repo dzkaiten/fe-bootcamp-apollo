@@ -1,10 +1,17 @@
 import React from 'react';
-import { Query, Mutation } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import { AllWidgetsQuery, ALL_WIDGETS_QUERY } from './queries/AllWidgetsQuery';
+import { DeleteWidgetMutation } from './mutations/DeleteWidgetMutation';
+
+import { WidgetList } from './components/WidgetList';
 import { WidgetForm } from './components/WidgetForm';
+
 import { CarForm } from './components/CarForm';
 import { CarTable } from './components/CarTable';
+import { DeleteCarMutation } from './mutations/DeleteCarMutation';
+import { AllCarsQuery } from './queries/AllCarsQuery';
 
 const APP_QUERY = gql`
   query AppQuery {
@@ -46,45 +53,16 @@ const APPEND_CAR_MUTATION = gql`
   }
 `;
 
-const DELETE_CAR_MUTATION = gql`
-  mutation DeleteCar($varCarId: Int) {
-    deleteCar(carId: $varCarId) 
-  }
-`
-
 export const App = () => {
   return <>
-  <Query query={APP_QUERY}>
-    {({ loading, errors, data }) => {
-      console.log('data:', data);
-      if (loading) return 'Loading';
-      if (errors) return 'Errors';
+  <DeleteWidgetMutation
+    component={(props) => <AllWidgetsQuery {...props} component={props => <WidgetList {...props} />} />}
+    refetchQueries={[ { query: ALL_WIDGETS_QUERY } ]}
+  />
 
-      return <>
-        <h1>Widget List</h1>
-        <ul>
-          {data.widgets.map(w => <li key={w.id}>{w.id} {w.name}</li>)}
-        </ul>
-
-        <h1>Car List</h1>
-        <Mutation mutation={DELETE_CAR_MUTATION}>
-          {(mutate) => {
-            const deleteCar = (carId) => {
-              return mutate( {
-                variables: { varCarId: carId }, // populates $varCarId in mutation
-                update(store, { data: { deleteCar: carId } }) {
-                  let data = store.readQuery({ query: APP_QUERY });
-                  data = { ...data, cars: data.cars.filter(c => c.id !== carId) };
-                  store.writeQuery({ query: APP_QUERY, data });
-                }
-              })
-            }
-            return <CarTable cars={data.cars} onDeleteCar={deleteCar}/>
-          }}
-        </Mutation>    
-    </>;
-    }}
-  </Query>
+  <DeleteCarMutation
+    component={(props) => <AllCarsQuery {...props} component={props => <CarTable {...props } />} />}
+  />
 
   <Mutation mutation={APPEND_WIDGET_MUTATION}>
     {(mutate) => {
@@ -108,16 +86,14 @@ export const App = () => {
           // },
 
           update(store, { data: { appendWidget: widget } }) {
-            let data = store.readQuery({ query: APP_QUERY });
+            let data = store.readQuery({ query: ALL_WIDGETS_QUERY });
             data = { ...data, widgets: data.widgets.concat(widget) };
-            store.writeQuery({ query: APP_QUERY, data });
+            store.writeQuery({ query: ALL_WIDGETS_QUERY, data });
           }
         });
       };
       return <WidgetForm onSubmitWidget={appendWidget} />;
-      
     }}
-
   </Mutation>
 
   <Mutation mutation={APPEND_CAR_MUTATION}>
@@ -151,50 +127,5 @@ export const App = () => {
   }}
 
   </Mutation>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  {/* <Mutation mutation={DELETE_CAR_MUTATION}>
-    {(mutate) => {
-
-      const deleteCar = id => {
-        return mutate({
-          mutation: DELETE_CAR_MUTATION,
-          variables: { id },
-          
-          refetchQueries: [
-            { query: APP_QUERY,}
-          ],
-          
-          // optimisticResponse: {
-          //   appendCar: {
-          //     ...car,
-          //     id: -1,
-          //     __typename: 'Car',
-          //   }
-          // },
-          
-          // update(store, { data: { appendCar: car }}) {
-          //   let data = store.readQuery({ query: APP_QUERY });
-          //   data = {...data, cars: data.cars.concat(car) };
-          //   store.writeQuery({ query: APP_QUERY, data });
-          // }
-        });
-      };
-    }}
-
-  </Mutation> */}
-
   </>;
 }

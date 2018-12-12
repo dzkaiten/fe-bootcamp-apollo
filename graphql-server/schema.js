@@ -8,6 +8,7 @@ export const typeDefs = `
   type Mutation {
     appendWidget(widget: WidgetInput): Widget
     appendCar(car: CarInput): Car
+    deleteWidget(widgetId: Int): Int
     deleteCar(carId: Int): Int
   }
 

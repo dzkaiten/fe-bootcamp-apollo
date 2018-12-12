@@ -24,6 +24,11 @@ export const resolvers = {
         body: JSON.stringify(car)
       }).then(res => res.json()),
 
+    deleteWidget: (_, { widgetId }, { restURL }) =>
+      fetch(`${restURL}/widgets/${widgetId}`, {
+        method: 'DELETE',    
+      }).then(() => widgetId),
+
     deleteCar: (_, { carId }, { restURL }) =>
       fetch(`${restURL}/cars/${carId}`, {
         method: 'DELETE',    
