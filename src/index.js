@@ -15,14 +15,36 @@ import { withClientState } from 'apollo-link-state';
 
 import './index.css';
 
+import gql from 'graphql-tag';
+
+
 const GRAPHQL_PORT = process.env.REACT_APP_GRAPHQL_PORT || 3010;
 
 const cache = new InMemoryCache();
 
 const clientStateLink = withClientState({
   cache,
-  defaults: { },
-  resolvers: { },
+  defaults: { 
+    toolHeader: 'Widget Tool',
+    editWidgetId: -1,
+    editCarId: -1,
+  },
+  resolvers: { 
+    Mutation: {
+      editWidget: (_, { editWidgetId }, { cache }) => {
+        const query = gql`{ editWidgetId }`;
+        let data = cache.readQuery({ query });
+        data = { ...data, editWidgetId };
+        cache.writeQuery({ query, data });
+      },
+      editCar: (_, { editCarId }, { cache }) => {
+        const query = gql`{ editCarId }`;
+        let data = cache.readQuery({ query });
+        data = { ...data, editCarId };
+        cache.writeQuery({ query, data });
+      },
+    }
+  },
 });
 
 const httpLink = new HttpLink({

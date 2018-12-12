@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 export const ALL_CARS_QUERY = gql`
     query AllCars {
+        editCarId @client
         cars {
             id
             make
@@ -17,14 +18,24 @@ export const ALL_CARS_QUERY = gql`
 
 export const AllCarsQuery = (props) => {
     return <Query query={ALL_CARS_QUERY}>
-        {({ loading, errors, data }) => {
+        {({ loading, errors, data, client }) => {
             if (loading) return 'Loading';
             if (errors) return 'Errors';
 
-            console.log('data in QUery', data);
-
             const PresentationalComponent = props.component;
-            return <PresentationalComponent cars={data.cars} {...props} />
+
+            const editCar = editCarId => {
+                console.log('editCar called with id: ', editCarId);
+                client.mutate({
+                    mutation: gql`
+                        mutation EditCar($editCarId: Int) {
+                            editCar(editCarId: $editCarId) @client
+                        }
+                    `,
+                    variables: { editCarId },
+                });
+            }   
+            return <PresentationalComponent cars={data.cars} onEditCar={editCar} editCarId={data.editCarId} {...props} />
         }}
     </Query>
 }

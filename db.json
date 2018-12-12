@@ -62,14 +62,6 @@
       "year": 2015,
       "color": "White",
       "price": 30000
-    },
-    {
-      "id": 4,
-      "make": "Toyota",
-      "model": "Camry",
-      "year": 1999,
-      "color": "Green",
-      "price": 1000
     }
   ]
 }
